@@ -11,7 +11,8 @@ WORKDIR /usr/local/src
 
 RUN  export LANG=en_US.UTF-8 && export LC_ALL=en_US.UTF-8
 RUN  apt-get update && apt-get install wget gnupg apt-utils tzdata -y \
-	&& apt-get install make gcc zlib1g-dev zip unzip openssl libssl-dev libpq-dev postgresql-client -y \
+	&& apt-get install make gcc zlib1g-dev zip unzip openssl libssl-dev libpq-dev postgresql-client locales -y \
+	&& locale-gen en_US.UTF-8 && update-locale LANG="en_US.UTF-8" && update-locale LC_ALL=en_US.UTF-8 \
 	&& apt-get clean \
 	&& groupadd nsadmin \
 	&& useradd -g nsadmin nsadmin \
