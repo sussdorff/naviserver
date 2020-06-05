@@ -63,6 +63,7 @@ RUN  apt-get update && apt-get install wget gnupg apt-utils tzdata -y \
 	&& cd  /usr/local/src/tdom-${version_tdom}/unix \ 
 	&& ../configure --enable-threads --disable-tdomalloc --prefix=/usr/local/ns --exec-prefix=/usr/local/ns --with-tcl=/usr/local/ns/lib \
 	&& make install && cd /usr/local/src/ && rm -rf tdom* \
+	&& wget --quiet https://github.com/RubyLane/rl_json/archive/master.zip && unzip master.zip && cd rl_json-master && ./configure --prefix=/usr/local/ns && make && make install && cd /usr/local/src/ \
 	&& chgrp -R nsadmin /usr/local/ns && chmod -R g+w /usr/local/ns \
 	&& rm -rf /usr/local/src/* \
 	&& apt-get remove libssl-dev gnupg apt-utils -y && apt-get auto-remove -y \
