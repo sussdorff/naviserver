@@ -1,4 +1,4 @@
-FROM ubuntu:18.04
+FROM ubuntu:20.04
 
 ENV version_ns 4.99.19
 ENV version_tcl 8.6.10
