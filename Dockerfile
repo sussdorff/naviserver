@@ -9,8 +9,7 @@ ENV version_tdom 0.9.1
 
 WORKDIR /usr/local/src 
 
-RUN  export LANG=en_US.UTF-8 && export LC_ALL=en_US.UTF-8
-RUN  apt-get update && apt-get install wget gnupg apt-utils tzdata -y \
+RUN  export LANG=en_US.UTF-8 && export LC_ALL=en_US.UTF-8 && apt-get update && apt-get install wget gnupg apt-utils tzdata git autoconf -y \
 	&& apt-get install make gcc zlib1g-dev zip unzip openssl libssl-dev libpq-dev postgresql-client locales -y \
 	&& locale-gen en_US.UTF-8 && update-locale LANG="en_US.UTF-8" && update-locale LC_ALL=en_US.UTF-8 \
 	&& apt-get clean \
@@ -28,21 +27,21 @@ RUN  apt-get update && apt-get install wget gnupg apt-utils tzdata -y \
 	&& cd /usr/local/src/tcllib-${version_tcllib} \
 	&& ./configure --prefix=/usr/local/ns \
 	&& make install \
-	&& cd /usr/local/src && rm -rf tcllib* \
-	&& wget --quiet https://downloads.sourceforge.net/sourceforge/naviserver/naviserver-${version_ns}.tar.gz \
-	&& tar zxvf naviserver-${version_ns}.tar.gz \
-	&& cd /usr/local/src/naviserver-${version_ns} \
-	&& ./configure --with-tcl=/usr/local/ns/lib --prefix=/usr/local/ns \
-	&& make && make install \
+	&& cd /usr/local/src && rm -rf tcllib* \ 
+	&& git clone https://bitbucket.org/naviserver/naviserver.git \
+ 	&& cd /usr/local/src/naviserver \
+	&& ./autogen.sh && make && make && make install \
 	&& cd /usr/local/src && rm -rf naviserver* \
-	&& wget --quiet https://downloads.sourceforge.net/sourceforge/naviserver/naviserver-${version_ns}-modules.tar.gz \
-	&& tar zxvf naviserver-${version_ns}-modules.tar.gz \
+	&& mkdir modules && cd modules \
+	&& git clone https://bitbucket.org/naviserver/nsdbpg.git \
 	&& cd /usr/local/src/modules/nsdbpg \
 	&& make PGLIB=/usr/lib PGINCLUDE=/usr/include/postgresql NAVISERVER=/usr/local/ns \
 	&& make NAVISERVER=/usr/local/ns install \
+	&& cd /usr/local/src/modules && git clone https://bitbucket.org/naviserver/nsstats.git \
 	&& cd /usr/local/src/modules/nsstats \
 	&& make NAVISERVER=/usr/local/ns \
 	&& make NAVISERVER=/usr/local/ns install \
+	&& cd /usr/local/src/modules && git clone https://bitbucket.org/naviserver/nsconf.git \
 	&& cd /usr/local/src/modules/nsconf \
 	&& make NAVISERVER=/usr/local/ns \
 	&& make NAVISERVER=/usr/local/ns install \
