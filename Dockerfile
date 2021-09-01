@@ -1,7 +1,7 @@
 FROM ubuntu:20.04
 
-ENV version_ns 4.99.19
-ENV version_tcl 8.6.10
+ENV version_ns 4.99.22
+ENV version_tcl 8.6.11
 ENV version_tcllib 1.20
 ENV version_thread 2.8.5
 ENV version_xotcl 2.3.0
