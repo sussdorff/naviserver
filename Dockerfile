@@ -1,19 +1,18 @@
-FROM ubuntu:20.04
+FROM ubuntu:22.04
 
-ENV version_ns 4.99.22
-ENV version_tcl 8.6.11
-ENV version_tcllib 1.20
-ENV version_thread 2.8.5
+ENV version_ns 4.99.24
+ENV version_tcl 8.6.12
+ENV version_tcllib 1.21
+ENV version_thread 2.8.6
 ENV version_xotcl 2.3.0
 ENV version_tdom 0.9.1
 
 WORKDIR /usr/local/src 
 
-RUN  export LANG=en_US.UTF-8 && export LC_ALL=en_US.UTF-8 && apt-get update && apt-get install wget gnupg apt-utils tzdata git autoconf -y \
-	&& apt-get install make gcc zlib1g-dev zip unzip openssl libssl-dev libpq-dev postgresql-client locales -y \
-	&& locale-gen en_US.UTF-8 && update-locale LANG="en_US.UTF-8" && update-locale LC_ALL=en_US.UTF-8 \
-	&& apt-get clean \
-	&& groupadd nsadmin \
+RUN  export LANG=en_US.UTF-8 && export LC_ALL=en_US.UTF-8 && apt-get update && apt-get install -y wget gnupg apt-utils git autoconf make gcc zlib1g-dev zip unzip openssl libssl-dev libpq-dev postgresql-client locales
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends tzdata && locale-gen en_US.UTF-8 && update-locale LANG="en_US.UTF-8" && update-locale LC_ALL=en_US.UTF-8 \
+	&& apt-get clean
+RUN groupadd nsadmin \
 	&& useradd -g nsadmin nsadmin \
 	&& wget --quiet https://downloads.sourceforge.net/sourceforge/tcl/tcl${version_tcl}-src.tar.gz \
 	&& tar xfz tcl${version_tcl}-src.tar.gz \
