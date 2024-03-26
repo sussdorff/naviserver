@@ -1,9 +1,9 @@
 FROM ubuntu:22.04
 
-ENV version_ns 4.99.24
-ENV version_tcl 8.6.12
+ENV version_ns 4.99.25
+ENV version_tcl 8.6.14
 ENV version_tcllib 1.21
-ENV version_thread 2.8.7
+ENV version_thread 2.8.9
 ENV version_xotcl 2.4.0
 ENV version_tdom 0.9.1
 
